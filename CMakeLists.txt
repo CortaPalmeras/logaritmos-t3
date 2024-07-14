@@ -22,6 +22,13 @@ endif()
 add_executable(
     prueba
     prueba.cpp
+    tarea.cpp
 )
 
+
+add_executable(
+    experimentacion
+    experimentacion.cpp
+    tarea.cpp
+)
 
