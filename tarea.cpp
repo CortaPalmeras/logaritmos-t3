@@ -16,7 +16,6 @@ HashFunction::HashFunction(size_t a, size_t b, size_t r) : a(a), b(b), r(r) {}
 
 size_t HashFunction::operator()(const std::string& s) const {
     size_t suma = strHash(s) % r;
-
     return (((a * suma + b)) % primo_grande) % r;
 }
 

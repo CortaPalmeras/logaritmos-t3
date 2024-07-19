@@ -37,7 +37,7 @@ int main(int argc, char** argv) {
         grep.insert(s);
     }
 
-    for (size_t i = 12; i <= 12;  i += 2) {
+    for (size_t i = 10; i <= 16;  i += 2) {
         size_t N = std::pow(2, i);
         
         for (size_t j = 0; j <= 4; j++) {
@@ -76,9 +76,9 @@ int main(int argc, char** argv) {
             }
 
 
-            /*resultados << N << ',' << cantidad_nombres << ','*/
-            /*           << t_acumulado_bloom << ',' << t_acumulado_grep << ','*/
-            /*           << positivos_bloom << ',' << positivos_grep << std::endl;*/
+            resultados << N << ',' << cantidad_nombres << ','
+                       << t_acumulado_bloom << ',' << t_acumulado_grep << ','
+                       << positivos_bloom << ',' << positivos_grep << std::endl;
 
             std::cout << N << ' ' << cantidad_nombres << ' ' << positivos_bloom << ' ' << positivos_grep << std::endl;
         }
