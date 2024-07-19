@@ -1,30 +1,23 @@
 
 #include <cstddef>
-#include <limits>
 #include <string>
-#include <functional>
 #include <random>
 #include <iostream>
 #include <fstream>
+#include <functional>
 
 #include "tarea.hpp"
 
-static size_t primo_grande = 2147483647;
+size_t primo_grande = 2147483647;
+std::hash<std::string> strHash;
 
 // FAMILIA UNIVERSAL DE HASHES PARA STRINGS
 HashFunction::HashFunction(size_t a, size_t b, size_t r) : a(a), b(b), r(r) {}
 
-size_t HashFunction::operator()(std::string s) const {
-    size_t suma = 0;
-    size_t a_pow = std::pow(a, s.size() - 1);
+size_t HashFunction::operator()(const std::string& s) const {
+    size_t suma = strHash(s) % r;
 
-    for (size_t i = 0; i < s.size(); i++) {
-        suma += s[i] * a_pow;
-    }
-
-    suma = suma % primo_grande;
-
-    return ((a * suma + b) % primo_grande) % r;
+    return (((a * suma + b)) % primo_grande) % r;
 }
 
 

@@ -1,7 +1,7 @@
 
 #include <cmath>
 #include <cstddef>
-#include <functional>
+#include <vector>
 #include <string>
 
 // Clase que representa una familia universal de funciones de hash
@@ -14,7 +14,7 @@ private:
     public:
     HashFunction(size_t a, size_t b, size_t r);
 
-    size_t operator()(std::string s) const;
+    size_t operator()(const std::string& s) const;
 };
 
 // funcion que genera un conjunto aleatorio de funciones de hashing 
