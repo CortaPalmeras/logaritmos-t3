@@ -20,8 +20,14 @@ if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU"
 endif()
 
 add_executable(
-    experimentacion
-    experimentacion.cpp
+    experimentacion1
+    experimentacion1.cpp
+    tarea.cpp
+)
+
+add_executable(
+    experimentacion2
+    experimentacion2.cpp
     tarea.cpp
 )
 

@@ -27,8 +27,6 @@ std::default_random_engine rng(RANDOM_SEED);
 
 std::vector<HashFunction> generateHashFunctions(size_t k, size_t r) {
     std::vector<HashFunction> hashFunctions;
-    hashFunctions.reserve(k);
-
     std::uniform_int_distribution<size_t> dist(0, primo_grande - 1);
 
     for (size_t i = 0; i < k; ++i) {
