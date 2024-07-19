@@ -9,6 +9,10 @@ podría no funcionar en otras plataformas.
 
 ## Instrucciónes
 
+Lo primero que se debe hacer es poner los archivos que se entregaron con el 
+enunciado en un directorio llamado `data` ubicado en el directorio raiz de la
+tarea, sin cambiarles los nombres.
+
 - Crear un directorio llamado build en el cual generar los archivos de cmake:
 ```bash
 mkdir build
