@@ -9,31 +9,50 @@
 
 #include "tarea.hpp"
 
+static size_t primo_grande = 2147483647;
+
+// FAMILIA UNIVERSAL DE HASHES PARA STRINGS
+HashFunction::HashFunction(size_t a, size_t b, size_t r) : a(a), b(b), r(r) {}
+
+size_t HashFunction::operator()(std::string s) const {
+    size_t suma = 0;
+    size_t a_pow = std::pow(a, s.size() - 1);
+
+    for (size_t i = 0; i < s.size(); i++) {
+        suma += s[i] * a_pow;
+    }
+
+    suma = suma % primo_grande;
+
+    return ((a * suma + b) % primo_grande) % r;
+}
+
+
+
+// GENERACION DE FUNCIONES DE HASH
 const size_t RANDOM_SEED = 382;
 std::default_random_engine rng(RANDOM_SEED);
 
-const size_t MIN_NUM = std::numeric_limits<size_t>::min();
-const size_t MAX_NUM = std::numeric_limits<size_t>::max();
-std::uniform_int_distribution<size_t> dist(MIN_NUM, MAX_NUM);
-
-std::hash<std::string> stringHash;
-
-HashFunctions generateHashFunctions(size_t k, size_t range) {
-    HashFunctions hashFunctions;
+std::vector<HashFunction> generateHashFunctions(size_t k, size_t r) {
+    std::vector<HashFunction> hashFunctions;
     hashFunctions.reserve(k);
 
-    for (size_t i = 0; i < k; ++i) {
-        size_t seed = dist(rng);
+    std::uniform_int_distribution<size_t> dist(0, primo_grande - 1);
 
-        hashFunctions.emplace_back([seed, range](const std::string& str) {
-            return (stringHash(str) ^ seed) % range;
-        });
+    for (size_t i = 0; i < k; ++i) {
+        size_t a = dist(rng);
+        size_t b = dist(rng);
+
+        hashFunctions.emplace_back(a, b, r);
     }
 
     return hashFunctions;
 }
 
 
+
+
+// LEER UN ARCHIVO
 std::vector<std::string> readFile(std::string name) {
     std::ifstream archivo(name);
 
@@ -57,6 +76,9 @@ std::vector<std::string> readFile(std::string name) {
 }
 
 
+
+
+// GREP SEARCH 
 GrepSearch::GrepSearch() : words() {}
 
 void GrepSearch::insert(const std::string& s) {
@@ -75,6 +97,7 @@ bool GrepSearch::search(const std::string& s) {
 
 
 
+// BLOOM FILTER
 BloomFilter::BloomFilter(size_t m, size_t k) : bits(m, false) {
     funcs = generateHashFunctions(k, m);
 }
@@ -93,6 +116,4 @@ bool BloomFilter::search(const std::string& s) {
     }
     return true;
 }
-
-
 

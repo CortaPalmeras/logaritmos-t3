@@ -1,14 +1,31 @@
 
+#include <cmath>
 #include <cstddef>
 #include <functional>
 #include <string>
 
-using HashFunction = std::function<size_t(const std::string&)>;
-using HashFunctions = std::vector<HashFunction>;
+// Clase que representa una familia universal de funciones de hash
+class HashFunction {
+private:
+    size_t a;
+    size_t b;
+    size_t r;
 
-HashFunctions generateHashFunctions(size_t k, size_t range);
+    public:
+    HashFunction(size_t a, size_t b, size_t r);
 
+    size_t operator()(std::string s) const;
+};
+
+// funcion que genera un conjunto aleatorio de funciones de hashing 
+// en base a una familia de hashes universal
+std::vector<HashFunction> generateHashFunctions(size_t k, size_t range);
+
+// funcion para leer las lineas de un archivo
 std::vector<std::string> readFile(std::string name);
+
+
+
 
 // Implementa la busqueda de string manera secuenciañ sin filtro
 class GrepSearch {
@@ -28,10 +45,12 @@ public:
 };
 
 
+
+
 // Implementa la busqueda de string con filtro de Bloom 
 class BloomFilter {
     // Arreglo de funciones de hashing distintas.
-    HashFunctions funcs;
+    std::vector<HashFunction> funcs;
     // Arreglo de bits.
     std::vector<bool> bits;
 
